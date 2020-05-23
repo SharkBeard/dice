@@ -1,4 +1,5 @@
 require "dice/version"
+require "dice/die"
 
 module Dice
   class Error < StandardError; end
