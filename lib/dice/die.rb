@@ -1,4 +1,6 @@
 class Dice::Die
+  attr_reader :face
+
   def initialize(sides, explode: nil, seed: nil)
     @sides = sides
     @seed = seed
@@ -6,10 +8,11 @@ class Dice::Die
   end
 
   def roll
-    srand(@seed) if @seed
-    rand(@sides - 1) + 1
+    @randomizer ||= ::Dice::Randomizer.for(@sides, @seed)
+    @face = @randomizer.random
   end
 
   def to_s
+    @face.to_s
   end
 end

@@ -8,24 +8,23 @@ RSpec.describe Dice::Die do
   context "rolling a d6" do
     let(:die_roll) { Dice::Die.new(6).roll }
 
-    it "rolls less than 6" do
-      expect(die_roll).to be <= 6
-    end
-
-    it "rolls higher than 0" do
-      expect(die_roll).to be > 0
+    it "rolls between 1-6" do
+      expect(die_roll).to (be >= 1).and be <= 6
     end
   end
 
   context "rolling a d20" do
     let(:die_roll) { Dice::Die.new(20).roll }
 
-    it "rolls less than 20" do
-      expect(die_roll).to be <= 20
-    end
-
-    it "rolls higher than 0" do
-      expect(die_roll).to be > 0
+    it "rolls between 1-20" do
+      expect(die_roll).to (be >= 1).and be <= 20
     end
   end
+
+  # TODO: Reroll
+  # TODO: Reroll on x result
+  # TODO: Explode on x result
+  # TODO: Success count
+  # TODO: Zero index
+  # TODO: Set faces
 end
