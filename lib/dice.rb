@@ -1,4 +1,5 @@
 require "dice/version"
+require "dice/bag"
 require "dice/die"
 require "dice/randomizer"
 

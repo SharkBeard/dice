@@ -36,6 +36,19 @@ RSpec.describe Dice::Die do
       end
     end
   end
+end
+
+RSpec.describe Dice::Bag do
+  context "rolling 2d6" do
+    let(:dice) { Array.new(2) { Dice::Die.new(6) } }
+    let(:bag) { Dice::Bag.new(dice) }
+    let(:rolls) { Array.new(30) { bag.roll } }
+
+    it "roll between 2-12" do
+      expect(rolls).to all(be >= 2).and all(be <= 12)
+    end
+  end
+end
 
   # TODO: Explode on x result
   # TODO: Success count
@@ -43,4 +56,3 @@ RSpec.describe Dice::Die do
   # TODO: Take x bottom
   # TODO: Zero index
   # TODO: Set faces
-end
