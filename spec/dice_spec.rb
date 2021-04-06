@@ -5,26 +5,42 @@ RSpec.describe Dice do
 end
 
 RSpec.describe Dice::Die do
-  context "rolling a d6" do
+  context "rolling d6s" do
+    let(:die) { Dice::Die.new(6) }
+    let(:rolls) { Array.new(20) { die.roll } }
     let(:die_roll) { Dice::Die.new(6).roll }
 
-    it "rolls between 1-6" do
-      expect(die_roll).to (be >= 1).and be <= 6
+    it "roll between 1-6" do
+      expect(rolls).to all(be >= 1).and all(be <= 6)
+      #expect(die_roll).to (be >= 1).and be <= 6
     end
   end
 
-  context "rolling a d20" do
-    let(:die_roll) { Dice::Die.new(20).roll }
+  context "rolling d20s" do
+    let(:die) { Dice::Die.new(20) }
+    let(:rolls) { Array.new(60) { die.roll } }
 
-    it "rolls between 1-20" do
-      expect(die_roll).to (be >= 1).and be <= 20
+    it "roll between 1-20" do
+      expect(rolls).to all(be >= 1).and all(be <= 20)
+      # expect(die_roll).to (be >= 1).and be <= 20
     end
   end
 
-  # TODO: Reroll
-  # TODO: Reroll on x result
+  context "rolling d20s" do
+    context "rerolling 1s" do
+      let(:die) { Dice::Die.new(20, reroll: 1) }
+      let(:rolls) { Array.new(60) { die.roll } }
+
+      it "roll between 2-20" do
+        expect(rolls).to all(be >= 2).and all(be <= 20)
+      end
+    end
+  end
+
   # TODO: Explode on x result
   # TODO: Success count
+  # TODO: Take x top
+  # TODO: Take x bottom
   # TODO: Zero index
   # TODO: Set faces
 end
