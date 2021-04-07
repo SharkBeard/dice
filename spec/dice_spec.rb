@@ -12,7 +12,6 @@ RSpec.describe Dice::Die do
 
     it "roll between 1-6" do
       expect(rolls).to all(be >= 1).and all(be <= 6)
-      #expect(die_roll).to (be >= 1).and be <= 6
     end
   end
 
@@ -22,7 +21,6 @@ RSpec.describe Dice::Die do
 
     it "roll between 1-20" do
       expect(rolls).to all(be >= 1).and all(be <= 20)
-      # expect(die_roll).to (be >= 1).and be <= 20
     end
   end
 
@@ -46,6 +44,15 @@ RSpec.describe Dice::Bag do
 
     it "roll between 2-12" do
       expect(rolls).to all(be >= 2).and all(be <= 12)
+    end
+
+    context "dropping lowest" do
+      let(:bag) { Dice::Bag.new(dice, drop_lowest: 1) }
+      let(:rolls) { Array.new(30) { bag.roll } }
+
+      it "roll between 1-6" do
+        expect(rolls).to all(be >= 1).and all(be <= 6)
+      end
     end
   end
 end
