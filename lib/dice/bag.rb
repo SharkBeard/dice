@@ -1,18 +1,22 @@
 class Dice::Bag
   attr_reader :result, :dice
 
-  def initialize(dice)
+  def initialize(dice, drop_lowest: 0)
     @dice = dice
-    @result = 0
+    @results = []
+    @drop_lowest = drop_lowest
   end
 
   def roll
-    @result = 0
+    @results = []
 
     @dice.each do |die|
-      @result += die.roll
+      @results.push(die.roll)
     end
 
-    @result
+    Dice::Totaller.for(
+      @results,
+      drop_lowest: @drop_lowest
+    ).total
   end
 end
