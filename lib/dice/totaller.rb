@@ -6,10 +6,16 @@ module Dice::Totaller
     keep_lowest: 0,
     keep_highest: 0
   )
-    if (drop_lowest)
+    if (drop_lowest > 0)
       DropLowest.new(values, drop_lowest)
+    elsif (drop_highest > 0)
+      DropHighest.new(values, drop_highest)
+    elsif (keep_lowest > 0)
+      KeepLowest.new(values, keep_lowest)
+    elsif (keep_highest > 0)
+      KeepHighest.new(values, keep_highest)
     else
-      Normal.new(dice)
+      Normal.new(values)
     end
   end
 
@@ -34,4 +40,36 @@ module Dice::Totaller
     end
   end
 
+  class KeepLowest
+    def initialize(values, lowest)
+      @values = values
+      @lowest = lowest
+    end
+
+    def total
+      @values.sort.take(@lowest).sum
+    end
+  end
+
+  class DropHighest
+    def initialize(values, highest)
+      @values = values
+      @highest = highest
+    end
+
+    def total
+      @values.sort.reverse.drop(@highest).sum
+    end
+  end
+
+  class KeepHighest
+    def initialize(values, highest)
+      @values = values
+      @highest = highest
+    end
+
+    def total
+      @values.sort.reverse.take(@highest).sum
+    end
+  end
 end

@@ -55,11 +55,31 @@ RSpec.describe Dice::Bag do
       end
     end
   end
+  
+  context "rolling 4d20" do
+    let(:dice) { Array.new(4) { Dice::Die.new(20) } }
+
+    context "droping highest 2 rolls" do
+      let(:bag) { Dice::Bag.new(dice, drop_highest: 2) }
+      let(:rolls) { Array.new(30) { bag.roll } }
+      
+      it "rolls between 2-40" do
+        expect(rolls).to all(be >= 2).and all(be <= 40)
+      end
+    end
+
+    context "keeping highest roll" do
+      let(:bag) { Dice::Bag.new(dice, keep_highest: 1) }
+      let(:rolls) { Array.new(30) { bag.roll } }
+      
+      it "rolls between 1-20" do
+        expect(rolls).to all(be >= 1).and all(be <= 20)
+      end
+    end
+  end
 end
 
   # TODO: Explode on x result
   # TODO: Success count
-  # TODO: Take x top
-  # TODO: Take x bottom
   # TODO: Zero index
   # TODO: Set faces
