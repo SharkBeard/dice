@@ -1,5 +1,5 @@
 class Dice::Bag
-  attr_reader :result, :dice
+  attr_reader :results, :dice
 
   def initialize(
     dice, 
