@@ -1,15 +1,15 @@
 # Dice
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/dice`. To experiment with that code, run `bin/console` for an interactive prompt.
+Simulates die rolls. Works with dice of any number of sides. 
 
-TODO: Delete this and the text above, and describe your gem
+Why not just random numbers using `rand`? Rolling multiple die will have different weights to the random numbers than just a random number.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'dice'
+gem 'dice', git: 'https://github.com/sharkbeard/dice'
 ```
 
 And then execute:
@@ -22,7 +22,76 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Roll a d6
+
+```ruby
+Dice::Die.new(6).roll # 1-6
+```
+
+Roll a d20
+
+```ruby
+d20 = Dice::Die.new(20)
+d20.roll # 1-20
+```
+
+### Rerolls
+
+Reroll 1s & 2s
+
+```ruby
+Dice::Die.new(20, reroll: [1,2]).roll # 3-20
+```
+
+### Bags
+
+You can put multiple dice in a bag and it will roll all of them at once and return the total.
+
+```ruby
+d6 = Dice::Die.new(6)
+d8 = Dice::Die.new(8)
+d10 = Dice::Die.new(10)
+
+bag = Dice::Bag([d6, d8, d10])
+bag.roll # 3-24
+```
+
+You can also see all the individual values.
+
+```ruby
+bag.results # [1-6,1-8,1-10]
+```
+
+#### Keep Die
+
+Keep lowest roll
+
+```ruby
+dice = Array.new(2) { Dice::Die(20) }
+Dice::Bag.new(dice, keep_lowest: 1) # 1-20
+```
+
+Keep highest roll
+
+```ruby
+Dice::Bag.new(dice, keep_highest: 1) # 1-20
+```
+
+#### Drop Die
+
+Drop 2 lowest rolls
+
+```ruby
+dice = Array.new(6) { Dice::Die(6) }
+Dice::Bag.new(dice, drop_lowest: 2).roll # 4-24
+```
+
+Drop highest roll
+
+```ruby
+Dice::Bag.new(dice, drop_highest: 1) # 5-30
+```
+
 
 ## Development
 
@@ -32,7 +101,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/dice.
+Bug reports and pull requests are welcome on GitHub at https://github.com/sharkbeard/dice.
 
 
 ## License
